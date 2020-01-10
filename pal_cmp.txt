@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int check_palindrome(char str[])
+{
+    int len = strlen(str);
+    int i;
+    for(i=0;i<len;i++)
+    {
+        if(str[i]!=str[len-i-1])
+        {
+            break;
+        }
+    }
+    if(i==len)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int main()
+{
+    char str[40];
+    gets(str);
+    if(check_palindrome(str))
+    {
+        printf("Palindrome");
+    }
+    else
+    {
+        printf("Not Palindrome");
+    }
+    return 0;
+}
