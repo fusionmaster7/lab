@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+int val = 10;
+int main()
+{
+	int val = 20;
+	{
+		int k = val;
+		int val = 30;
+		cout<<"The value in the inner block is "<<val;
+		cout<<"\nThe value of k is "<<k;
+		cout<<"\nThe value of global variable is "<<::val;
+	}
+	cout<<"\nThe value inside main is "<<val;
+	cout<<"\nThe value of global variable is "<<::val;
+	return 0;
+}

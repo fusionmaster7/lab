@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+
+class Sample
+{
+	private:
+		int data;
+	public:
+		void getData();
+		//Inline function declaration
+		inline void printData();
+};
+
+void Sample::getData()
+{
+	cout<<"Please enter the number ";
+	cin>>data;
+}
+
+//Inline function definition
+inline void Sample::printData()
+{
+	cout<<"Inline function called ";
+	cout<<"\nThe value of number is "<<data;
+}
+
+int main()
+{
+	Sample s1;
+	s1.getData();
+	s1.printData();
+	return 0;
+}

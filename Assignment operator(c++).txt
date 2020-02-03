@@ -1,0 +1,65 @@
+#include<iostream>
+using namespace std;
+ 
+class NUM
+{
+    private:
+        int n;
+         
+    public:
+        //function to get number
+        void getNum(int x)
+        {
+            n=x;
+        }
+        //function to display number
+        void dispNum(void)
+        {
+            cout << "\nNumber is: " << n;
+        }
+        //add two objects - Binary Plus(+) Operator Overloading
+        NUM operator +(NUM &obj)
+        {
+            NUM x;  //create another object
+            x.n=this->n + obj.n;
+            return (x); //return object
+        }
+        NUM operator -(NUM &obj)
+        {
+            NUM x;  //create another object
+            x.n=this->n - obj.n;
+            return (x); //return object
+        }
+        NUM operator *(NUM &obj)
+        {
+            NUM x;  //create another object
+            x.n=this->n * obj.n;
+            return (x); //return object
+        }
+        NUM operator /(NUM &obj)
+        {
+            NUM x;  //create another object
+            x.n=this->n / obj.n;
+            return (x); //return object
+        }
+        
+};
+int main()
+{
+    NUM num1,num2,sum;
+    NUM diff,prod,q;
+    num1.getNum(100);
+    num2.getNum(20);
+     
+    //add two objects
+    sum = num1 + num2;
+    diff = num1 - num2;
+	prod = num1 * num2;
+	q = num1/num2; 
+    sum.dispNum();
+    diff.dispNum();
+    prod.dispNum();
+    q.dispNum();
+	cout << endl;
+    return 0;
+}
