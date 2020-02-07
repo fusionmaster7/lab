@@ -1,0 +1,72 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//Function to take input of array elements
+void takeInput(int arr[],int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+}
+
+//Function to print the array
+void print(int arr[],int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        printf("%d ",arr[i]);
+    }
+}
+
+//Function that places the pivot element into correct position and returns its position
+int findPivot(int arr[],int left,int right,int pivot)
+{
+    int i,j,temp;
+    i = left;
+    j = right + 1;
+    while(j>i)
+    {
+        do{
+            i++;
+        }while((i<right)&&(arr[i]<pivot));
+
+        do{
+            j--;
+        }while(arr[j]>pivot);
+        if(j>i)
+        {
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    temp = arr[left];
+    arr[left] = arr[j];
+    arr[j] = temp;
+    return j;
+}
+
+//Function to implement quick sort recursively
+void quickSort(int arr[],int left,int right)
+{
+    if(left<right)
+    {
+        int pivotPos = findPivot(arr,left,right,arr[left]);
+        quickSort(arr,left,pivotPos-1);
+        quickSort(arr,pivotPos+1,right);
+    }
+}
+int main()
+{
+    int arr[100],n;
+    printf("Please enter the number of elements: ");
+    scanf("%d",&n);
+    printf("\nPlease enter the elements of the array ");
+    takeInput(arr,n);
+    quickSort(arr,0,n-1);
+    print(arr,n);
+    return 0;
+}
