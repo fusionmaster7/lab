@@ -1,0 +1,82 @@
+#include<iostream>
+using namespace std;
+class Array
+{
+	private:
+		int arr[100];
+		int size;
+		int index;
+	public:
+		Array()
+		{
+			size = 0;
+			index = 0;	
+		}
+		~Array()
+		{
+			cout<<"Array destroyed";
+		}
+		void insert(int val);
+		void print();
+		void sort();
+};
+void Array::insert(int val)
+{
+	if(index==size-1)
+	{
+		cout<<"Array is full";
+	}
+	else
+	{
+		arr[index] = val;
+		index++;
+		size++;
+	}
+}
+void Array::sort() //Bubble sort
+{
+	int i,j,temp;
+	for(int i=0;i<size-1;i++)
+	{
+		for(j=0;j<size-i-1;j++)
+		{
+			if(arr[j+1]<arr[j])
+			{
+				temp = arr[j];
+				arr[j] = arr[j+1];
+				arr[j+1] = temp;
+			}
+		}
+	}
+}
+void Array::print()
+{
+	for(int i=0;i<size;i++)
+	{
+		cout<<arr[i]<<" ";
+	}
+}
+int main()
+{
+	Array a1;
+	int n;
+	cout<<"Please enter the size of the array you want to create ";
+	cin>>n;
+	int element;
+	for(int i=1;i<=n;i++)
+	{
+		cin>>element;
+		a1.insert(element);
+	}
+	char ch;
+	cout<<"\nDo you want to sort this array?(Y/N): ";
+	cin>>ch;
+	if(ch=='Y')
+	{
+		a1.sort();
+		cout<<"The sorted array is \n";
+		a1.print();
+	}
+	cout<<"\n";
+	return 0;
+}
