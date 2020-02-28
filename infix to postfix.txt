@@ -1,0 +1,133 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdbool.h>
+#include<ctype.h>
+#define MAX 100
+char stack[MAX];
+int top = -1;
+
+//Function to push into stack
+void push(char ch)
+{
+    if(top>=MAX-1)
+    {
+        printf("\nStack overflow");
+    }
+    else
+    {
+        top++;
+        stack[top] = ch;
+    }
+}
+
+//Function to pop and return popped value
+char pop()
+{
+    if(top<0)
+    {
+        return '$'; //Some garbage value so that we know stack is empty
+    }
+    else
+    {
+        char temp = stack[top];
+        top--;
+        return temp;
+    }
+    
+}
+
+//To check if passed character if operand or not
+bool isOperand(char ch)
+{
+    if(isalnum(ch))
+        return true;
+    else
+        return false;
+}
+
+int findPriority(char ch)
+{
+    if(ch == '^')
+        return 4;
+    else if(ch == '*'||ch == '/')   
+        return 3;
+    else if(ch == '+'||ch== '-')
+        return 2;
+    else if(ch == '(')
+        return 1;
+    else
+        return 0;
+}
+
+int infixToPostix(char infix[],char postfix[])
+{
+    int len = strlen(infix);
+    int i;
+    int flag = 1;
+    int pos = 0;
+    infix[len] = ')';
+    len++;
+    infix[len] = '\0';
+    push('(');
+    for(i=0;i<len;i++)
+    {
+        if(isOperand(infix[i]))
+        {
+            postfix[pos] = infix[i];
+            pos++;
+        }
+        else if(infix[i]=='(')
+        {
+            push(infix[i]);
+        }
+        else if(infix[i]==')')
+        {
+            if(top<0)
+            {
+                return 0;
+            }
+            while (stack[top]!='(')
+            {
+                postfix[pos] = pop();
+                pos++;
+            }
+            char temp = pop();  
+        }
+        else
+        {
+            if(!(isOperand(postfix[i])||postfix[i]=='('||postfix[i]==')'))
+            {
+                return 0;
+            }
+            while (findPriority(stack[top])>=findPriority(infix[i]))
+            {
+                postfix[pos] = pop();
+                pos++;
+            }
+            push(infix[i]);
+        }
+        
+    }
+    if(top>=0)
+    {
+        return 0;
+    }
+    else
+    {
+        postfix[pos] = '\0';
+        return 1;
+    }
+    
+    
+}
+
+int main()
+{
+    char infix[40],postfix[40];
+    gets(infix);
+    if(infixToPostix(infix,postfix))
+        printf("%s",postfix);
+    else
+        printf("Invalid expression");
+    return 0;
+}

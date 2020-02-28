@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdbool.h>
+#include<ctype.h>
+#define MAX 100
+int stack[MAX];
+int top = -1;
+
+//Function to push into stack
+void push(int val)
+{
+    if(top>=MAX-1)
+    {
+        printf("Stack Overflow\n");
+    }
+    else
+    {
+        top++;
+        stack[top] = val;
+    }
+
+}
+
+//Function to pop value from stack and return it
+int pop()
+{
+    if(top<0)
+    {
+        return '$'; //Some garbage value so we know stack is empty
+    }
+    else
+    {
+        int temp = stack[top];
+        top--;
+        return temp;
+    }
+}
+
+//Function to check if character passed is operand or not
+bool isOperand(char ch)
+{
+    if(ch>='0'&&ch<='9')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+//Function to evaluate postfix expression
+int postfixEval(char postfix[])
+{
+    int len = strlen(postfix);
+    int i;
+    for(i=0;i<len;i++)
+    {
+        if(isOperand(postfix[i]))
+        {
+            push((int)(postfix[i]-48));
+        }
+        else
+        {
+            float op2 = (float)pop();
+            float op1 = (float)pop();
+            switch (postfix[i])
+            {
+            case '+':
+                push(op1+op2);
+                break;
+            case '-':
+                push(op1-op2);
+                break;
+            case '*':
+                push(op1*op2);
+                break;
+            case '/':
+                push((float)(op1/op2));
+                break;
+            default:
+                return -1000;
+                break;
+            }
+        }
+    }
+    if(top>0)
+    {
+        return -1000;
+    }
+    else
+    {
+        return pop();
+    }
+
+}
+
+int main()
+{
+    char postfix[40];
+    printf("Please enter the postfix expression: ");
+    gets(postfix);
+    int result = postfixEval(postfix);
+    if(result == -1000)
+    {
+        printf("\nInvalid postfix expression");
+    }
+    else
+    {
+        printf("\nThe answer is %d",result);
+    }
+    return 0;
+}
